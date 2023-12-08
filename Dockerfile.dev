@@ -1,0 +1,26 @@
+# NOTES:
+# To build dev container:  docker build -f Dockerfile.dev .
+# To run tests:  docker run -it [CONTAINER ID] npm run test
+# To run tests in running container:  docker exec -it [CONTAINER ID] npm run test
+
+FROM node:16-alpine
+
+# Original
+#WORKDIR '/app'
+#COPY package.json .
+#RUN npm install
+#COPY . .
+
+# Changes required for WSL from notes in lesson 69.
+# TO RUN VOLUMES: 
+#    docker run -it -p 3000:3000 -v /home/node/app/node_modules -v ~/udemy_docker/frontend:/home/node/app [CONTAINER_ID]
+USER node
+ 
+RUN mkdir -p /home/node/app
+WORKDIR /home/node/app
+ 
+COPY --chown=node:node ./package.json ./
+RUN npm install
+COPY --chown=node:node ./ ./
+
+CMD ["npm", "run", "start"]
