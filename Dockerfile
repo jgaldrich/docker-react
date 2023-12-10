@@ -1,5 +1,6 @@
 # NOTES:
 # TO BUILD: docker build .
+# TO RUN: docker run 8080:80 [CONTAINER ID]
 
 FROM node:16-alpine as builder
 WORKDIR '/app'
